@@ -1,0 +1,252 @@
+@use 'variables' as *;
+
+/* ==============================
+   NAVBAR SHELL
+============================== */
+.navbar-shell {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 1000;
+  padding: 20px 24px;
+  pointer-events: none;
+
+  @media (max-width: $bp-md) {
+    padding: 16px;
+  }
+
+  @media (max-width: $bp-sm) {
+    padding: 12px;
+  }
+}
+
+/* ==============================
+   NAVBAR (Floating Pill)
+============================== */
+.navbar {
+  pointer-events: auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 64px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  background: #000;
+  border-radius: 22px;
+  transition: box-shadow $transition-base, background $transition-base;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+
+  &.scrolled {
+    background: rgba(11, 15, 25, 0.97);
+    box-shadow:
+      0 8px 40px rgba(0, 0, 0, 0.6),
+      0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  }
+
+  @media (max-width: $bp-lg) {
+    height: 58px;
+    padding: 0 20px;
+  }
+
+  @media (max-width: $bp-sm) {
+    border-radius: 16px;
+  }
+
+  /* ==============================
+     INNER LAYOUT
+  ============================== */
+  &__inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-lg;
+  }
+
+  /* ==============================
+     LOGO
+  ============================== */
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex-shrink: 0;
+
+    font-family: $font-display;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    color: $color-text;
+    text-decoration: none;
+
+    svg {
+      color: $color-primary;
+    }
+  }
+
+  /* ==============================
+     NAV MENU
+  ============================== */
+  &__menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex: 1;
+
+    @media (max-width: $bp-lg) {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      inset-inline: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+
+      background: #0b0f19;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+
+      &.is-open {
+        display: flex;
+      }
+
+      li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  /* ==============================
+     NAV LINK
+  ============================== */
+  &__link {
+    position: relative;
+    display: block;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 -4px 0;
+      height: 2px;
+      background: $color-primary;
+      border-radius: 2px;
+      transform: scaleX(0);
+      transition: transform $transition-fast;
+
+      @media (max-width: $bp-lg) {
+        display: none;
+      }
+    }
+
+    &:hover,
+    &.active {
+      color: $color-text;
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    @media (max-width: $bp-lg) {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 0.9rem;
+
+      &.active {
+        color: $color-primary-light;
+        background: rgba(26, 108, 240, 0.08);
+      }
+    }
+  }
+
+  /* ==============================
+     CTA BUTTON
+  ============================== */
+  &__cta {
+    flex-shrink: 0;
+    padding: 9px 22px;
+    border-radius: $radius-full;
+
+    background: #fff;
+    color: #0b0f19;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition: background $transition-fast,
+                transform $transition-fast,
+                box-shadow $transition-fast;
+
+    &:hover {
+      background: #e8edf5;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 380px) {
+      display: none;
+    }
+  }
+
+  /* ==============================
+     HAMBURGER
+  ============================== */
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px;
+    flex-shrink: 0;
+    cursor: pointer;
+
+    @media (max-width: $bp-lg) {
+      display: flex;
+    }
+
+    span {
+      width: 22px;
+      height: 2px;
+      background: $color-text;
+      border-radius: 2px;
+      transition: transform $transition-base, opacity $transition-base;
+    }
+
+    &.is-open {
+      span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+
+      span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+  }
+}
